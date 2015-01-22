@@ -31,10 +31,12 @@
                             {:value column :index-new index})
                           columns-set final-indices))))
 
-(defn file-old-order [file-contents]
+(defn file-order [file-contents]
   (let [columns (select-the-third-row-in-a-csv-file file-contents)
         indices (range (count columns))]
-    (sort-by :value (map (fn [index column] {:value column :index-old index}) indices columns  ))))
+    (sort-by :index (map (fn [index column] {:substance column :index index}) indices columns  ))))
+
+
 
 (defn file-reordering-structure [new-order order-per-file]
   (sort-by :index-old <
@@ -57,6 +59,8 @@
        (.isFile thing))
      (file-seq (io/file path))))
 
+
+
 (def final-order
   (new-order
    (unique-columns
@@ -76,23 +80,29 @@
   (map sort-row
        rows))
 
-(defn file-as-maps [reordering-structure file-contents]
-  (mapv (fn [row]
-         (mapv (fn [item sort-map]
-                (assoc {} :value item :index-old (:index-old sort-map) :index-new (:index-new sort-map) ))
-              row reordering-structure))
-   file-contents))
+ 
+(defn file-as-maps [order file-contents name]
+  (defn recur-through-row
+    ([row] (recur-through-row (next row)  (row 0)))
+    ([row date] (let [new-order (map (fn [index] (conj index {:date date})) (next order))]
+                  (map (fn [index item] (assoc index :measurement item :name name)) new-order row)
+                  
+                  )
+                   ))
+                          
+    (map recur-through-row
+         file-contents))
 
 
-(defn process-file [file final-order]
-  (let [primo-passo (file-as-csv file)
-        name (first primo-passo)
-        contents (second primo-passo)
-        old-order (file-old-order contents)
+(defn process-file [file]
+  (let [as-csv (file-as-csv file)
+        name (first as-csv)
+        contents (second as-csv)
+        order (file-order contents)
         ]
-    (back-to-flat (sort-rows (file-as-maps
-                              (file-reordering-structure final-order old-order)
-                              contents)))))
+    (file-as-maps order contents name)
+    ))
+
 
 
 (defn write-file [file]
