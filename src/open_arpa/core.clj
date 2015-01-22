@@ -115,4 +115,4 @@
 
   
 (defn main []
-  (dorun (map (fn [file] (write-file file)) (files-collection path) )))
+  (dorun (map (fn [file] (write-file file)) (files-collection path))))
