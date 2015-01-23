@@ -12,11 +12,14 @@
 (def det-path "resources/processed-files")
 
 
-(defn select-the-third-row-in-a-csv-file [file]
-  (second (next file)))
+(defn select-the-nth-row-in-a-csv-file [file index]
+  (nth file (- index 1)))
 
 (defn third-rows [files]
-  (map select-the-third-row-in-a-csv-file files))
+  (map select-the-nth-row-in-a-csv-file files (repeat 3)))
+
+(defn fifth-rows [files]
+  (map select-the-nth-row-in-a-csv-file files (repeat 5)))
 
 (defn unique-columns [third-rows-collection]
 "goes through all the files, select the third row in each file and creates a set of all the unique acronyms used there. Such set is gonna be be the set of columns in the final order. With the set of files of 2013 this is the output
@@ -32,9 +35,12 @@
                           columns-set final-indices))))
 
 (defn file-order [file-contents]
-  (let [columns (select-the-third-row-in-a-csv-file file-contents)
+  (let [columns (select-the-nth-row-in-a-csv-file file-contents 3)
+        measure-units (select-the-nth-row-in-a-csv-file file-contents 5)
         indices (range (count columns))]
-    (sort-by :index (map (fn [index column] {:substance column :index index}) indices columns  ))))
+    (sort-by :index (map (fn [index column measurement-unit]
+                           {:substance column :measurement-unit measurement-unit :index index})
+                         indices columns measure-units ))))
 
 
 
@@ -59,37 +65,17 @@
        (.isFile thing))
      (file-seq (io/file path))))
 
-
-
-(def final-order
-  (new-order
-   (unique-columns
-    (third-rows
-     (map second (map file-as-csv (files-collection path)))))))
-
 (defn back-to-flat [contents]
-  (mapv (fn [row]
-         (mapv (fn [item]
-                 (:value item))
-          row))
-   contents))
-
-(defn sort-rows [rows]
-  (defn sort-row [row]
-    (into [] (sort-by :index-new row)))
-  (map sort-row
-       rows))
-
+  (mapv (fn [el]
+          [(:date el) (:substance el) (:measurement el) (:measurement-unit el) (:name el)])
+        (mapcat (fn [el] el) contents)))
  
 (defn file-as-maps [order file-contents name]
   (defn recur-through-row
     ([row] (recur-through-row (next row)  (row 0)))
     ([row date] (let [new-order (map (fn [index] (conj index {:date date})) (next order))]
-                  (map (fn [index item] (assoc index :measurement item :name name)) new-order row)
-                  
-                  )
-                   ))
-                          
+                  (map (fn [index item] (assoc index :measurement item :name name)) new-order row))))
+  
     (map recur-through-row
          file-contents))
 
@@ -99,30 +85,16 @@
         name (first as-csv)
         contents (second as-csv)
         order (file-order contents)
+        purged (drop 7 contents)
+        ;; unita di misura
         ]
-    (file-as-maps order contents name)
+    (back-to-flat  (file-as-maps order purged name))
     ))
 
-
-
-(defn write-file [file]
-  (with-open [out-file (io/writer (str  "resources/processed-files/" (.getName file)))]
+(defn write-file [contents]
+  (with-open [out-file (io/writer (str  "resources/processed-files/result.csv" ))]
     (csv/write-csv out-file
-                   (process-file file final-order)))
- )
+                   contents)))
 
-(defn process-files [path]
-  (let [files (files-collection path)
-        files-names (map (fn [my-file] (.getName my-file)) files)
-        as-csv (map (fn [file] (file-as-csv file)) files)
-        processed (map (fn [csv-file] (process-file csv-file final-order)) as-csv)
-        ]
-    (map (fn [contents file]
-           (write-file file contents))
-         processed files-names)
-    ))
-
-
-  
 (defn main []
-  (dorun (map (fn [file] (write-file file)) (files-collection path))))
+  (write-file (mapcat process-file (files-collection path)))) 
