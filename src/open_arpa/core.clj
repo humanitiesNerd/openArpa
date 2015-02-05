@@ -6,7 +6,7 @@
             ))
 
 
-(def adige (io/file "resources/files/adige.csv"))
+(def adige (io/file "resources/files/test_data/adige_test.csv"))
 (def talsano (io/file "resources/files/talsano.csv"))
 (def grottaglie (io/file "resources/files/grottaglie.csv"))
 (def path "resources/files")
