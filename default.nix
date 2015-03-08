@@ -1,12 +1,12 @@
-let pkgs = import <nixpkgs> {};
-in pkgs.myEnvFun {
-        name = "openArpa-env";
-        buildInputs = with pkgs.python27Packages; [
-          python
-          xlrd
-
-        ];
-    }
+      with import <nixpkgs> {};
+      
+      buildPythonPackage {
+        name = "myproject";
+      
+        buildInputs = with pkgs.pythonPackages; [ xlrd ];
+      
+        src = ./.;
+      }
 
 
 

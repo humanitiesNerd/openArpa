@@ -6,11 +6,9 @@
             ))
 
 (def centraline (io/file "resources/centraline.csv"))
-(def arnesano (io/file "resources/files/ARNESANO_2013.csv"))
 (def andria (io/file "resources/files/andria.csv"))
 (def adige (io/file "resources/files/test_data/adige_test.csv"))
-(def talsano (io/file "resources/files/talsano.csv"))
-(def grottaglie (io/file "resources/files/grottaglie.csv"))
+(def grottaglie (io/file "resources/files/altamura.csv"))
 (def path "resources/files")
 (def det-path "resources/processed-files")
 
@@ -27,11 +25,14 @@
 
 (defn file-order [file-contents pollutants]
   (let [columns (select-the-nth-row-in-a-csv-file file-contents 3)
-        measure-units (select-the-nth-row-in-a-csv-file file-contents 5)
+        ;measure-units (select-the-nth-row-in-a-csv-file file-contents 5)
         indices (range (count columns))]
-    (sort-by :index (map (fn [index column measurement-unit]
-                           {:substance (pollutants column) :measurement-unit measurement-unit :index index})
-                         indices columns measure-units ))))
+    (sort-by :index (map (fn [index column]
+                           (let [substance (pollutants column)
+                                 ]
+                             {:substance substance :measurement-unit (measurement-units substance) :index index})
+                           )
+                         indices columns))))
 
 (defn file-as-csv [file]
   (list  (.getName file) (csv/read-csv (io/reader file))))
@@ -63,8 +64,8 @@
     (map recur-through-row
          file-contents))
 
-(defn station-name [file-contents]
-   (second  (select-the-nth-row-in-a-csv-file file-contents 2))) 
+(defn extracted-station-name [file-contents]
+   (second (select-the-nth-row-in-a-csv-file file-contents 2))) 
 
 (defn insert-coordinates [file-contents stations]
   (map (fn [item]
@@ -74,8 +75,8 @@
                   :lat (coords 0)
                   :lon (coords 1))
            (assoc item
-                  :lat "0000"
-                  :lon "0000"))
+                  :lat ""
+                  :lon ""))
    
          )
        (mapcat (fn [el] el)  file-contents)
@@ -89,7 +90,7 @@
   (let [as-csv (file-as-csv file)
         ;name (first as-csv)
         contents (second as-csv)
-        station (dicts/stations (station-name contents))        
+        station (dicts/stations (extracted-station-name contents))        
         order (file-order contents pollutants)
         purged (drop 7 contents)
         ;; unita di misura

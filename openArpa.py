@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import xlrd
 import datetime
+import time
 import csv
-from os import sys
+from os import sys  
 
 def cell_value(cell, datemode):
     if cell.ctype == xlrd.XL_CELL_DATE:
@@ -13,7 +14,7 @@ def cell_value(cell, datemode):
             else:
                 val = datetime.time(*t[3:])
         else:
-            val = EPOCH
+            val = time.gmtime(0)
     else:
         val = cell.value
         if isinstance(val, float):
@@ -36,9 +37,14 @@ def csv_from_excel(excel_file):
         for rownum in xrange(worksheet.nrows):
             row = []
             for colnum in xrange(worksheet.ncols):
-                row.append(worksheet.cell(rownum, colnum))
-            s2 = [unicode(cell_value(cell, workbook.datemode)).encode("utf-8") for cell in row]
-     
+                try:
+                    row.append(worksheet.cell(rownum, colnum))
+                except: XLDateAmbiguous
+                print "ambiguous date", worksheet_name, rownum, colnum
+            try:
+                s2 = [unicode(cell_value(cell, workbook.datemode)).encode("utf-8") for cell in row]
+            except: XLDateAmbiguous
+            print "pure questa mo", worksheet_name, rownum, colnum
             wr.writerow(s2)
         your_csv_file.close()
 

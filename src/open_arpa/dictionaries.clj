@@ -129,3 +129,52 @@
                   "VV" "VV"
                   "VVP" "VVP"
                   })
+
+(def measurement-units {
+                  "HC" "ug/m3 293K"
+                  
+                  "CH4" "ug-C/m3"
+                  "CO" "mg/m3 293K"
+                  "DV" "SETTORE"
+                  
+                  "DVG" "DVG"
+                  "DVP" "SETTORE"
+                  "E-C6H6" "ug/m3 293K"
+                  "H2S" "ug/m3 293K"
+                  "IPA" "ng/m3"
+                  "MP-XYLENE" ""
+                  "NMHC" "ug-C/m3"
+                  "NO" "ug/m3 293K"
+                  "NO2" "ug/m3 293K"
+                  "NO2api" "ug/m3 293K"
+                  "NOx" "ug/m3 293K"
+                  
+                  "Noxapi" "ug/m3 293K"
+                  "O-XYLENE" ""
+                  "O3" "ug/m3 293K"
+                  "PIOGGIA" "mm"
+                  "PM10" "ug/m3"
+                  "PM10biora" "ug/m3"
+                  
+                  "Pm2.5" "ug/m3"
+                  "Pressione" "mbar"
+                  "Pioggia" "mm"
+                  "RAD GLOB" "W/m2"
+                  
+                  "RADS" "W/m2"
+                  "RADSG" "W/m2"
+                  
+                  "RADSN" "W/m2"
+                  "RADST" "W/m2"
+                  "SIGMA" "gradi"
+                  "SO2" "ug/m3 293K"
+                  "Temp" "gradi C."
+           
+                  "TOLUENE" "ug/m3 293K"
+              
+                  "Umidità" "%"
+                  "VV" "m/s"
+                 
+                  "VVP" "m/s"
+
+                        })
