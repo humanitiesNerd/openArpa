@@ -1,5 +1,4 @@
 (ns open-arpa.core
-  
   (:require [clojure.data.csv :as csv]
             [clojure.java.io :as io]
             [open-arpa.dictionaries :as dicts :refer [pollutants stations]]
@@ -30,7 +29,7 @@
     (sort-by :index (map (fn [index column]
                            (let [substance (pollutants column)
                                  ]
-                             {:substance substance :measurement-unit (measurement-units substance) :index index})
+                             {:substance substance :measurement-unit (dicts/measurement-units substance) :index index})
                            )
                          indices columns))))
 
@@ -111,7 +110,7 @@
 
 
 (defn stations-names []
-  (apply sorted-set (map second (map station-name (files-collection path)))))
+  (apply sorted-set (map second (map extracted-station-name (files-collection path)))))
   
 (defn pollutant-name [file]
   (let [file-contents (second (file-as-csv file))]
