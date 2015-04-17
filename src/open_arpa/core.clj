@@ -1,13 +1,13 @@
 (ns open-arpa.core
   (:require [clojure.data.csv :as csv]
             [clojure.java.io :as io]
+            [pathetic.core :as paths]
             [open-arpa.dictionaries :as dicts :refer [pollutants stations]]
             ))
 
 (def centraline (io/file "resources/centraline.csv"))
-(def andria (io/file "resources/files/andria.csv"))
-(def adige (io/file "resources/files/test_data/adige_test.csv"))
-(def grottaglie (io/file "resources/files/altamura.csv"))
+(def ASM (io/file "resources/new_layout/ASM/2005/BARI Asm 2005.csv"))
+(def Giorgi (io/file "resources/new_layout/Giorgiloro/2006/LECCE Surbo 2006.csv"))
 (def path "resources/files")
 (def det-path "resources/processed-files")
 
@@ -65,6 +65,13 @@
 
 (defn extracted-station-name [file-contents]
    (second (select-the-nth-row-in-a-csv-file file-contents 2))) 
+
+(defn new-extracted-station-name [file]
+  (let [path (paths/up-dir (paths/up-dir (paths/parse-path file)))
+        length (count path)
+        index (- length 1)]
+    (path index)
+  ))
 
 (defn insert-coordinates [file-contents stations]
   (map (fn [item]
