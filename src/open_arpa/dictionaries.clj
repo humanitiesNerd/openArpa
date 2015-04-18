@@ -38,7 +38,7 @@
                 "Maglie" "ITC De Castro"
                 "Massafra (TA) Via Frappietro" "Via Frappietro"
                 "Mesagne" "Mesagne" 
-                "Molfetta ASM" "ASM"
+                "ASM" "ASM"
                 "Molfetta Verdi" "Verdi"
                 "Monopoli" "Viale Aldo Moro"
                 "Monopoli Italgreen" "Via Pisonio"
