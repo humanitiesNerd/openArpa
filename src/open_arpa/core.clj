@@ -5,7 +5,7 @@
             [open-arpa.dictionaries :as dicts :refer [pollutants stations]]
             ))
 
-(def centraline (io/file "resources/centraline.csv"))
+(def centraline (io/file "resources/new_layout/centraline.csv"))
 (def ASM (io/file "resources/new_layout/ASM/2005/BARI Asm 2005.csv"))
 (def Giorgi (io/file "resources/new_layout/Giorgiloro/2006/LECCE Surbo 2006.csv"))
 (def path "resources/files")
@@ -96,7 +96,7 @@
   (let [as-csv (file-as-csv file)
         ;name (first as-csv)
         contents (second as-csv)
-        station (dicts/stations (extracted-station-name contents))        
+        station (new-extracted-station-name file)        
         order (file-order contents pollutants)
         purged (drop 7 contents)
         ;; unita di misura
