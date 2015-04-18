@@ -92,7 +92,7 @@
   (let [contents (csv/read-csv (io/reader file))]
     (reduce conj (map (fn [row] {(row 3) [(row 6) (row 7)]})  contents))))
 
-(defn process-file [file stations pollutants]
+(defn process-file [file pollutants]
   (let [as-csv (file-as-csv file)
         ;name (first as-csv)
         contents (second as-csv)
@@ -111,7 +111,6 @@
 (defn main []
   (write-file (mapcat process-file
                       (files-collection path)
-                      (repeatedly (fn [] dicts/stations))
                       (repeatedly (fn [] dicts/pollutants)) ))) 
 
 
