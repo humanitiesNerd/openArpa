@@ -5,10 +5,10 @@
             [open-arpa.dictionaries :as dicts :refer [pollutants stations]]
             ))
 
-(def centraline (io/file "resources/new_layout/centraline.csv"))
+(def centraline (io/file "resources/centraline.csv"))
 (def ASM (io/file "resources/new_layout/ASM/2005/BARI Asm 2005.csv"))
 (def Giorgi (io/file "resources/new_layout/Giorgiloro/2006/LECCE Surbo 2006.csv"))
-(def path "resources/files")
+(def path "resources/new_layout")
 (def det-path "resources/processed-files")
 
 
@@ -43,7 +43,7 @@
      (file-seq (io/file path))))
 
 (defn file-contents [file]
-  (drop 7 (second (file-as-csv file))))
+  (drop 8 (second (file-as-csv file))))
 
 (defn back-to-flat [contents]
   (mapv (fn [el]
