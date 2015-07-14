@@ -3,7 +3,10 @@
             [clojure.java.io :as io]
             [pathetic.core :as paths]
             [open-arpa.dictionaries :as dicts :refer [pollutants stations]]
+            [clj-time.core :as t]
+            [clj-time.format :as f]
             ))
+
 
 (def centraline (io/file "resources/centraline.csv"))
 (def ASM (io/file "resources/new_layout/ASM/2005/BARI Asm 2005.csv"))
@@ -50,10 +53,14 @@
   (mapv (fn [el]
           [(:date el) (:substance el) (:measurement el) (:measurement-unit el) (:station el) (:lat el) (:lon el)])
          contents))
- 
+
+(defn extract-datetime [source-datetime]
+  (let [multiparser (f/formatter (t/default-time-zone) "dd/MM/YYYY HH.mm" "YYYY-MM-dd HH:mm:ss")]
+    (f/unparse-local multiparser (f/parse-local multiparser source-datetime))))
+
 (defn file-as-maps [order file-contents station]
   (defn recur-through-row
-    ([row] (recur-through-row (next row)  (row 0)))
+    ([row] (recur-through-row (next row)  (extract-datetime (row 0))))
     ([row date] (let [new-order (map (fn [index] (conj index {:date date})) (next order))]
                   (remove nil? (map (fn [index item]
                                          (if (> (count item) 0)
@@ -99,7 +106,8 @@
         contents (second as-csv)
         station (new-extracted-station-name file)        
         order (file-order contents pollutants)
-        purged (drop 7 contents)
+        ;purged (drop 7 contents)
+        purged (file-contents file)
         ;; unita di misura
         ]
     (back-to-flat (insert-coordinates (file-as-maps order purged station) (produce-stations centraline)))))
