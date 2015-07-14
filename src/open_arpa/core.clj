@@ -9,6 +9,7 @@
 (def ASM (io/file "resources/new_layout/ASM/2005/BARI Asm 2005.csv"))
 (def Giorgi (io/file "resources/new_layout/Giorgiloro/2006/LECCE Surbo 2006.csv"))
 (def path "resources/new_layout")
+(def path-test "resources/new_layout-test-data")
 (def det-path "resources/processed-files")
 
 
@@ -59,7 +60,7 @@
                                            (assoc index :measurement item :station station)))
                                        new-order
                                        row)))))
-  
+ 
     (map recur-through-row
          file-contents))
 
@@ -108,7 +109,7 @@
     (csv/write-csv out-file
                    contents)))
 
-(defn main []
+(defn main [path]
   (write-file (mapcat process-file
                       (files-collection path)
                       (repeatedly (fn [] dicts/pollutants)) ))) 
