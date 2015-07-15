@@ -56,9 +56,12 @@
 
 (defn extract-datetime [source-datetime]
   (let [multiparser (f/formatter (t/default-time-zone) "dd/MM/YYYY HH.mm" "YYYY-MM-dd HH:mm:ss")]
-    
-      (f/unparse-local multiparser (f/parse-local multiparser source-datetime))
-      ))
+     (try     
+       (f/unparse-local multiparser (f/parse-local multiparser source-datetime))
+       (catch Exception e
+         (println (.getMessage e))
+         (throw (Exception. "datetime non parsabile")))
+      )))
 
 (defn file-as-maps [order file-contents station]
   (defn recur-through-row
@@ -117,7 +120,7 @@
        (insert-coordinates
         (file-as-maps order purged station)
         (produce-stations centraline)))
-      (catch Exception e (println file-name)))))
+      (catch Exception e (println (.getPath file))))))
 
 (defn write-file [contents]
   (with-open [out-file (io/writer (str  "resources/processed-files/result.csv" ))]
