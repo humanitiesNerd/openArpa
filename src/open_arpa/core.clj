@@ -56,7 +56,9 @@
 
 (defn extract-datetime [source-datetime]
   (let [multiparser (f/formatter (t/default-time-zone) "dd/MM/YYYY HH.mm" "YYYY-MM-dd HH:mm:ss")]
-    (f/unparse-local multiparser (f/parse-local multiparser source-datetime))))
+    
+      (f/unparse-local multiparser (f/parse-local multiparser source-datetime))
+      ))
 
 (defn file-as-maps [order file-contents station]
   (defn recur-through-row
@@ -102,7 +104,7 @@
 
 (defn process-file [file pollutants]
   (let [as-csv (file-as-csv file)
-        ;name (first as-csv)
+        file-name (first as-csv)
         contents (second as-csv)
         station (new-extracted-station-name file)        
         order (file-order contents pollutants)
@@ -110,7 +112,12 @@
         purged (file-contents file)
         ;; unita di misura
         ]
-    (back-to-flat (insert-coordinates (file-as-maps order purged station) (produce-stations centraline)))))
+    (try 
+      (back-to-flat
+       (insert-coordinates
+        (file-as-maps order purged station)
+        (produce-stations centraline)))
+      (catch Exception e (println file-name)))))
 
 (defn write-file [contents]
   (with-open [out-file (io/writer (str  "resources/processed-files/result.csv" ))]
