@@ -54,14 +54,33 @@
           [(:date el) (:substance el) (:measurement el) (:measurement-unit el) (:station el) (:lat el) (:lon el)])
          contents))
 
-(defn extract-datetime [source-datetime]
+(defn extract-datetime [source-datetime line-number]
   (let [multiparser (f/formatter (t/default-time-zone) "dd/MM/YYYY HH.mm" "YYYY-MM-dd HH:mm:ss")]
-     (try     
-       (f/unparse-local multiparser (f/parse-local multiparser source-datetime))
+    (f/unparse-local multiparser (f/parse-local multiparser source-datetime))))
+
+
+
+(defn add-line-number [line line-number]
+  (conj line line-number))
+
+(defn add-line-numbers [lines]
+  (let [numbers (range 9 (count lines))]
+    (map add-line-number lines numbers)))
+
+(defn parse-dates [file-body]
+  (map
+   (fn [row]
+     (try
+       (assoc row 0 (extract-datetime (row 0)))
        (catch Exception e
-         (println (.getMessage e))
-         (throw (Exception. "datetime non parsabile")))
-      )))
+         (let [row-as-list (into () row)
+               line-number (last row-as-list)]
+           (println (str "riga: " line-number (.getMessage e)))))))
+   file-body))
+
+;; (vec (cons "abc" (into () [1 2 3])))
+  
+
 
 (defn file-as-maps [order file-contents station]
   (defn recur-through-row
