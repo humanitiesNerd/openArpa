@@ -42,22 +42,14 @@
   (list  (.getName file) (csv/read-csv (io/reader file))))
 
 
-(defn add-line-number [line line-number]
-  (conj line line-number))
-
-(defn add-line-numbers [lines]
-  (let [numbers (range 9 (count lines))]
-    (map add-line-number lines numbers)))
-
-
 (defn file-contents [as-csv]
   (drop 8 (second as-csv)))
 
 (defn file-body [rows]
   (drop 8 rows))
 
-(defn file-headers [as-csv]
-  (take 8 as-csv))
+(defn file-headers [rows]
+  (take 8 rows))
 
 (defn ingested-file [file]
          {:file-name (.getName file) :file file :rows  (csv/read-csv (io/reader file))})
@@ -69,6 +61,10 @@
     (dissoc
      (assoc map :file-headers headers :file-body body)
      :rows)))
+
+
+(defn added-file-order [current-map]
+  (dissoc (assoc current-map :order (next (file-order (:file-headers current-map) pollutants)) :file-headers)))
 
  (defn files-collection [path]
     (filter
