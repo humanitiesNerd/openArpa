@@ -11,6 +11,7 @@
 (def centraline (io/file "resources/centraline.csv"))
 (def ASM (io/file "resources/new_layout/ASM/2005/BARI Asm 2005.csv"))
 (def Giorgi (io/file "resources/new_layout/Giorgiloro/2006/LECCE Surbo 2006.csv"))
+(def Altamura-test (io/file "resources/new_layout-test-data/Altamura/2010/BARI Altamura 2010.csv"))
 (def path "resources/new_layout")
 (def path-test "resources/new_layout-test-data")
 (def det-path "resources/processed-files")
@@ -40,14 +41,40 @@
 (defn file-as-csv [file]
   (list  (.getName file) (csv/read-csv (io/reader file))))
 
+
+(defn add-line-number [line line-number]
+  (conj line line-number))
+
+(defn add-line-numbers [lines]
+  (let [numbers (range 9 (count lines))]
+    (map add-line-number lines numbers)))
+
+
+(defn file-contents [as-csv]
+  (drop 8 (second as-csv)))
+
+(defn file-body [rows]
+  (drop 8 rows))
+
+(defn file-headers [as-csv]
+  (take 8 as-csv))
+
+(defn ingested-file [file]
+         {:file-name (.getName file) :file file :rows  (csv/read-csv (io/reader file))})
+
+(defn splitted-file [map]
+  (let [rows (map :rows)
+        headers (file-headers rows)
+        body (file-body rows)]
+    (dissoc
+     (assoc map :file-headers headers :file-body body)
+     :rows)))
+
  (defn files-collection [path]
     (filter
      (fn [thing]
        (.isFile thing))
      (file-seq (io/file path))))
-
-(defn file-contents [file]
-  (drop 8 (second (file-as-csv file))))
 
 (defn back-to-flat [contents]
   (mapv (fn [el]
@@ -58,25 +85,6 @@
   (let [multiparser (f/formatter (t/default-time-zone) "dd/MM/YYYY HH.mm" "YYYY-MM-dd HH:mm:ss")]
     (f/unparse-local multiparser (f/parse-local multiparser source-datetime))))
 
-
-
-(defn add-line-number [line line-number]
-  (conj line line-number))
-
-(defn add-line-numbers [lines]
-  (let [numbers (range 9 (count lines))]
-    (map add-line-number lines numbers)))
-
-(defn parse-dates [file-body]
-  (map
-   (fn [row]
-     (try
-       (assoc row 0 (extract-datetime (row 0)))
-       (catch Exception e
-         (let [row-as-list (into () row)
-               line-number (last row-as-list)]
-           (println (str "riga: " line-number (.getMessage e)))))))
-   file-body))
 
 ;; (vec (cons "abc" (into () [1 2 3])))
   
