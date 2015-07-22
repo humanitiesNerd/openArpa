@@ -28,7 +28,7 @@
 
 
 (defn file-order [file-contents pollutants]
-  (let [columns (select-the-nth-row-in-a-csv-file file-contents 3)
+  (let [columns (next (select-the-nth-row-in-a-csv-file file-contents 3))
         ;measure-units (select-the-nth-row-in-a-csv-file file-contents 5)
         indices (range (count columns))]
     (sort-by :index (map (fn [index column]
@@ -64,7 +64,7 @@
 
 
 (defn added-file-order [current-map]
-  (dissoc (assoc current-map :order (next (file-order (:file-headers current-map) pollutants)) :file-headers)))
+  (dissoc (assoc current-map :order (file-order (:file-headers current-map) pollutants)) :file-headers))
 
  (defn files-collection [path]
     (filter
@@ -88,8 +88,8 @@
 
 (defn file-as-maps [order file-contents station]
   (defn recur-through-row
-    ([row] (recur-through-row (next row)  (extract-datetime (row 0))))
-    ([row date] (let [new-order (map (fn [index] (conj index {:date date})) (next order))]
+    ([row] (recur-through-row (next row)  (row 0)))
+    ([row date] (let [new-order (map (fn [index] (conj index {:date date})) order)]
                   (remove nil? (map (fn [index item]
                                          (if (> (count item) 0)
                                            (assoc index :measurement item :station station)))
