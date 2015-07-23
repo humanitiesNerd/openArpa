@@ -90,15 +90,18 @@
 
 
 (defn parsed-datetime [current-map]
-  (let [row (:row current-map)]
-    (try 
-      (assoc row 0 (extract-datetime (row 0)))
-      (catch Exception e
-        (println (str "data non parsabile nel file " (.getPath (:file current-map)) "\nalla riga " (:line-number current-map) "\n" (.getMessage e)))
-        )
-      (finally row))))
+  (try 
+    (update-in current-map [:row 0] extract-datetime)
+    (catch Exception e
+      (println (str "questo datetime \n" (get-in current-map [:row 0])
+                    "\n non e' parsabile nel file "
+                    (.getPath (:file current-map))
+                    "\nalla riga "
+                    (:line-number current-map) "\n"
+                    (.getMessage e)))
+      )
+    (finally current-map)))
 
-  
 
 
 (defn file-as-maps [order file-contents station]

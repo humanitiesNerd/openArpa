@@ -6,16 +6,23 @@
 
 (reloaded.repl/set-init! dev-system)
 
-(def step1 (op/ingested-file op/Altamura-test))
 
-(def step2 (op/splitted-file step1))
+;; op/Altamura-test
 
-(def step3 (op/added-file-order step2))
+(def collection (mapv op/ingested-file (op/files-collection op/path-test)))
 
-(def step4 (op/line-numbers step3))
 
-(def step5 (map op/parsed-datetime step4))
+(def process
+  (into []
 
-;;(def process (map op/parse-dates handle))
+        
+             (mapcat
+              (comp
+               op/line-numbers
+               op/added-file-order
+               op/splitted-file))
+             
+             collection))
 
-;; (dorun (println process))
+
+;;(def process (into [] handle collection))
