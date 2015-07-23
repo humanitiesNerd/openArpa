@@ -12,6 +12,8 @@
 
 (def step3 (op/added-file-order step2))
 
+(def step4 (op/line-numbers step3))
+
 ;;(def process (map op/parse-dates handle))
 
 ;; (dorun (println process))

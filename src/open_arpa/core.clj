@@ -66,6 +66,13 @@
 (defn added-file-order [current-map]
   (dissoc (assoc current-map :order (file-order (:file-headers current-map) pollutants)) :file-headers))
 
+(defn line-numbers [current-map]
+  (defn per-row [row number]
+    {:file-name (:file-name current-map) :file (:file current-map) :order (:order current-map) :line-number number :row row})
+  (let [rows (:file-body current-map)
+        numbers (range 1 (+ (count rows) 1 ))]
+    (map per-row rows numbers)))
+
  (defn files-collection [path]
     (filter
      (fn [thing]
