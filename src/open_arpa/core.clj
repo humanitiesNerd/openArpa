@@ -84,12 +84,20 @@
           [(:date el) (:substance el) (:measurement el) (:measurement-unit el) (:station el) (:lat el) (:lon el)])
          contents))
 
-(defn extract-datetime [source-datetime line-number]
+(defn extract-datetime [source-datetime]
   (let [multiparser (f/formatter (t/default-time-zone) "dd/MM/YYYY HH.mm" "YYYY-MM-dd HH:mm:ss")]
     (f/unparse-local multiparser (f/parse-local multiparser source-datetime))))
 
 
-;; (vec (cons "abc" (into () [1 2 3])))
+(defn parsed-datetime [current-map]
+  (let [row (:row current-map)]
+    (try 
+      (assoc row 0 (extract-datetime (row 0)))
+      (catch Exception e
+        (println (str "data non parsabile nel file " (.getPath (:file current-map)) "\nalla riga " (:line-number current-map) "\n" (.getMessage e)))
+        )
+      (finally row))))
+
   
 
 

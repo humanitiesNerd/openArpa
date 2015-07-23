@@ -14,6 +14,8 @@
 
 (def step4 (op/line-numbers step3))
 
+(def step5 (map op/parsed-datetime step4))
+
 ;;(def process (map op/parse-dates handle))
 
 ;; (dorun (println process))
