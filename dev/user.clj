@@ -22,3 +22,5 @@
                  op/row-map
                  op/parsed-datetime
                  ) step1))
+
+(def step3 (map op/insert-coordinates step2))

@@ -109,6 +109,9 @@
     (path index)
   ))
 
+(defn produce-stations [file]
+  (let [contents (csv/read-csv (io/reader file))]
+    (reduce conj (map (fn [row] {(row 3) [(row 6) (row 7)]})  contents))))
 
 (defn row-map [current-map]
   (let [row (:row current-map)
@@ -118,6 +121,10 @@
         cleaned-row (filter (fn [item] (> (count item) 0)) (next row))
         station (new-extracted-station-name (:file current-map))]
     (map (fn [index item] (assoc index :measurement item :station station )) file-row-order cleaned-row)))
+
+
+
+
 
 (defn file-as-maps [order file-contents station]
   (defn recur-through-row
@@ -130,30 +137,18 @@
                                        row)))))
  
     (map recur-through-row
-         file-contents))
+         file-contents)) 
 
-(defn extracted-station-name [file-contents]
-   (second (select-the-nth-row-in-a-csv-file file-contents 2))) 
- 
+(defn insert-coordinates [current-map]
+  (let [stations (produce-stations centraline)]          
+       (if-let [coords (stations (current-map :station))]
+         (assoc current-map
+                :lat (coords 0)
+                :lon (coords 1))
+         (assoc current-map
+                :lat ""
+                :lon ""))))
 
-(defn insert-coordinates [file-contents stations]
-  (map (fn [item]
-
-         (if-let [coords (stations (item :station))]
-           (assoc item
-                  :lat (coords 0)
-                  :lon (coords 1))
-           (assoc item
-                  :lat ""
-                  :lon ""))
-   
-         )
-       (mapcat (fn [el] el)  file-contents)
-  ))
-
-(defn produce-stations [file]
-  (let [contents (csv/read-csv (io/reader file))]
-    (reduce conj (map (fn [row] {(row 3) [(row 6) (row 7)]})  contents))))
 
 (defn process-file [file pollutants]
   (let [as-csv (file-as-csv file)
@@ -183,9 +178,9 @@
                       (repeatedly (fn [] dicts/pollutants)) ))) 
 
 
-
+(comment
 (defn stations-names []
-  (apply sorted-set (map second (map extracted-station-name (files-collection path)))))
+  (apply sorted-set (map second (map extracted-station-name (files-collection path))))))
   
 (defn pollutant-name [file]
   (let [file-contents (second (file-as-csv file))]
