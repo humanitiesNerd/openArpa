@@ -18,4 +18,7 @@
                  op/ingested-file)
                 coll)) 
 
-(def step2 (map op/parsed-datetime step1))
+(def step2 (mapcat (comp
+                 op/row-map
+                 op/parsed-datetime
+                 ) step1))

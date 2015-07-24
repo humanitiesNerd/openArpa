@@ -102,7 +102,22 @@
       )
     (finally current-map)))
 
+(defn new-extracted-station-name [file]
+  (let [path (paths/up-dir (paths/up-dir (paths/parse-path file)))
+        length (count path)
+        index (- length 1)]
+    (path index)
+  ))
 
+
+(defn row-map [current-map]
+  (let [row (:row current-map)
+        datetime (row 0)
+        file-order (:order current-map)
+        file-row-order (map (fn [index] (conj index {:date datetime})) file-order)
+        cleaned-row (filter (fn [item] (> (count item) 0)) (next row))
+        station (new-extracted-station-name (:file current-map))]
+    (map (fn [index item] (assoc index :measurement item :station station )) file-row-order cleaned-row)))
 
 (defn file-as-maps [order file-contents station]
   (defn recur-through-row
@@ -119,13 +134,7 @@
 
 (defn extracted-station-name [file-contents]
    (second (select-the-nth-row-in-a-csv-file file-contents 2))) 
-
-(defn new-extracted-station-name [file]
-  (let [path (paths/up-dir (paths/up-dir (paths/parse-path file)))
-        length (count path)
-        index (- length 1)]
-    (path index)
-  ))
+ 
 
 (defn insert-coordinates [file-contents stations]
   (map (fn [item]
