@@ -79,10 +79,15 @@
        (.isFile thing))
      (file-seq (io/file path))))
 
-(defn back-to-flat [contents]
-  (mapv (fn [el]
-          [(:date el) (:substance el) (:measurement el) (:measurement-unit el) (:station el) (:lat el) (:lon el)])
-         contents))
+(defn back-to-flat [current-map]
+  [
+   (:date current-map)
+   (:substance current-map)
+   (:measurement current-map)
+   (:measurement-unit current-map)
+   (:station current-map)
+   (:lat current-map)
+   (:lon current-map)])
 
 (defn extract-datetime [source-datetime]
   (let [multiparser (f/formatter (t/default-time-zone) "dd/MM/YYYY HH.mm" "YYYY-MM-dd HH:mm:ss")]

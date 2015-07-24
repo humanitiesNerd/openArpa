@@ -24,3 +24,5 @@
                  ) step1))
 
 (def step3 (map op/insert-coordinates step2))
+
+(def step4 (map op/back-to-flat step3))
