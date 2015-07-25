@@ -66,9 +66,41 @@
 (defn added-file-order [current-map]
   (dissoc (assoc current-map :order (file-order (:file-headers current-map) pollutants)) :file-headers))
 
+
+(defn produce-stations [file]
+  (let [contents (csv/read-csv (io/reader file))]
+    (reduce conj (map (fn [row] {(row 3) [(row 6) (row 7)]})  contents))))
+
+(defn coordinates [current-map]
+  (let [stations (produce-stations centraline)]          
+       (if-let [coords (stations (current-map :station))]
+         (assoc current-map
+                :lat (coords 0)
+                :lon (coords 1))
+         (assoc current-map
+                :lat ""
+                :lon ""))))
+
+(defn new-extracted-station-name [file]
+  (let [path (paths/up-dir (paths/up-dir (paths/parse-path file)))
+        length (count path)
+        index (- length 1)]
+    (path index)
+  ))
+
+(defn station [current-map]
+  (assoc current-map :station (new-extracted-station-name (:file current-map))))
+
+
 (defn line-numbers [current-map]
   (defn per-row [row number]
-    {:file-name (:file-name current-map) :file (:file current-map) :order (:order current-map) :line-number number :row row})
+    {:file-name (:file-name current-map)
+     :file (:file current-map)
+     :order (:order current-map)
+     :line-number number :row row
+     :station (:station current-map)
+     :lat (:lat current-map)
+     :lon (:lon current-map)})
   (let [rows (:file-body current-map)
         numbers (range 1 (+ (count rows) 1 ))]
     (map per-row rows numbers)))
@@ -107,28 +139,32 @@
       )
     (finally current-map)))
 
-(defn new-extracted-station-name [file]
-  (let [path (paths/up-dir (paths/up-dir (paths/parse-path file)))
-        length (count path)
-        index (- length 1)]
-    (path index)
-  ))
 
-(defn produce-stations [file]
-  (let [contents (csv/read-csv (io/reader file))]
-    (reduce conj (map (fn [row] {(row 3) [(row 6) (row 7)]})  contents))))
 
 (defn row-map [current-map]
   (let [row (:row current-map)
         datetime (row 0)
         file-order (:order current-map)
-        file-row-order (map (fn [index] (conj index {:date datetime})) file-order)
-        cleaned-row (filter (fn [item] (> (count item) 0)) (next row))
-        station (new-extracted-station-name (:file current-map))]
-    (map (fn [index item] (assoc index :measurement item :station station )) file-row-order cleaned-row)))
+        file-row-order (map (fn [index]
+                              (conj index {:date datetime}))
+                            file-order)
+        ;cleaned-row (filter (fn [item] (> (count item) 0)) (next row))
+        station (:station current-map)
+        lat (:lat current-map)
+        lon (:lon current-map)]
+    (map
+     (fn [index item]
+       (assoc index
+              :measurement item
+              :station station
+              :lat lat
+              :lon lon ))
+     file-row-order
+     row)))
 
 
-
+(defn empty-cells-filtered-out [current-map]
+  (> (count (:measurement current-map)) 0))
 
 
 (defn file-as-maps [order file-contents station]
@@ -144,17 +180,7 @@
     (map recur-through-row
          file-contents)) 
 
-(defn insert-coordinates [current-map]
-  (let [stations (produce-stations centraline)]          
-       (if-let [coords (stations (current-map :station))]
-         (assoc current-map
-                :lat (coords 0)
-                :lon (coords 1))
-         (assoc current-map
-                :lat ""
-                :lon ""))))
-
-
+(comment
 (defn process-file [file pollutants]
   (let [as-csv (file-as-csv file)
         file-name (first as-csv)
@@ -171,16 +197,19 @@
         (file-as-maps order purged station)
         (produce-stations centraline)))
       (catch Exception e (println (.getPath file))))))
-
+)
 (defn write-file [contents]
   (with-open [out-file (io/writer (str  "resources/processed-files/result.csv" ))]
     (csv/write-csv out-file
                    contents)))
 
+(comment
 (defn main [path]
   (write-file (mapcat process-file
                       (files-collection path)
                       (repeatedly (fn [] dicts/pollutants)) ))) 
+
+)
 
 
 (comment

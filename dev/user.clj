@@ -12,17 +12,20 @@
 (def coll (op/files-collection op/path-test))
 
 (def step1 (mapcat (comp
-                 op/line-numbers
-                 op/added-file-order
-                 op/splitted-file
-                 op/ingested-file)
-                coll)) 
+                    op/line-numbers
+                    op/coordinates
+                    op/station
+                    op/added-file-order
+                    op/splitted-file
+                    op/ingested-file)
+                   coll)) 
 
 (def step2 (mapcat (comp
                  op/row-map
                  op/parsed-datetime
                  ) step1))
 
-(def step3 (map op/insert-coordinates step2))
+(def step3 (filter op/empty-cells-filtered-out step2))
 
 (def step4 (map op/back-to-flat step3))
+
