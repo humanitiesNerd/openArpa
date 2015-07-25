@@ -14,6 +14,7 @@
 (def ASM (io/file "resources/new_layout/ASM/2005/BARI Asm 2005.csv"))
 (def Giorgi (io/file "resources/new_layout/Giorgiloro/2006/LECCE Surbo 2006.csv"))
 (def Cerrate (io/file "resources/new_layout/S. Maria Cerrate/2008/Cerrate.csv"))
+(def Mandorli (io/file "resources/new_layout/via dei Mandorli/2013/liceo-scientifico.csv"))
 (def Altamura-test (io/file "resources/new_layout-test-data/Altamura/2010/BARI Altamura 2010.csv"))
 (def path "resources/new_layout")
 (def path-test "resources/new_layout-test-data")
@@ -127,7 +128,7 @@
 
 (defn extract-datetime [source-datetime]
   (let [multiparser (f/formatter (t/default-time-zone)
-                                 "dd/MM/YYYY HH:mm" "dd/MM/YYYY HH.mm" "YYYY-MM-dd HH:mm:ss")]
+                                 "dd/MM/YYYY HH:mm" "dd/MM/YYYY HH.mm" "dd/MM/YYYY HH.mm.ss" "YYYY-MM-dd HH:mm:ss")]
     ;; the file S. Maria Cerrate/2008/Cerrate.csv has some lines with the first format. I don't know how many more files have the same format
     (f/unparse-local multiparser (f/parse-local multiparser source-datetime))))
 
