@@ -15,6 +15,8 @@
 (def Giorgi (io/file "resources/new_layout/Giorgiloro/2006/LECCE Surbo 2006.csv"))
 (def Cerrate (io/file "resources/new_layout/S. Maria Cerrate/2008/Cerrate.csv"))
 (def Mandorli (io/file "resources/new_layout/via dei Mandorli/2013/liceo-scientifico.csv"))
+(def CapDiPorto (io/file "resources/new_layout/Capitaneria di Porto/2007/FOGGIA CapDiporto 2007.csv"))
+
 (def Altamura-test (io/file "resources/new_layout-test-data/Altamura/2010/BARI Altamura 2010.csv"))
 (def path "resources/new_layout")
 (def path-test "resources/new_layout-test-data")
@@ -143,8 +145,9 @@
                     "\nalla riga "
                     (:line-number current-map) "\n"
                     (.getMessage e)))
+      current-map
       )
-    (finally current-map)))
+    ))
 
 
 
