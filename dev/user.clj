@@ -2,6 +2,7 @@
   (:require [reloaded.repl :refer [system init start stop go reset]]
             [open-arpa.systems :refer [dev-system]]
             [open-arpa.process :as op]
+            [open-arpa.core :as core]
             [open-arpa.dictionaries :refer [pollutants]]))
 
 (reloaded.repl/set-init! dev-system)
@@ -30,3 +31,5 @@
 (def step4 (map op/back-to-flat step3))
 
 
+;; at the repl:
+;; (core/main op/path-test)

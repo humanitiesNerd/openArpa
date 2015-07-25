@@ -13,6 +13,7 @@
 (def centraline (io/file "resources/centraline.csv"))
 (def ASM (io/file "resources/new_layout/ASM/2005/BARI Asm 2005.csv"))
 (def Giorgi (io/file "resources/new_layout/Giorgiloro/2006/LECCE Surbo 2006.csv"))
+(def Cerrate (io/file "resources/new_layout/S. Maria Cerrate/2008/Cerrate.csv"))
 (def Altamura-test (io/file "resources/new_layout-test-data/Altamura/2010/BARI Altamura 2010.csv"))
 (def path "resources/new_layout")
 (def path-test "resources/new_layout-test-data")
@@ -99,7 +100,8 @@
     {:file-name (:file-name current-map)
      :file (:file current-map)
      :order (:order current-map)
-     :line-number number :row row
+     :line-number number
+     :row row
      :station (:station current-map)
      :lat (:lat current-map)
      :lon (:lon current-map)})
@@ -124,7 +126,9 @@
    (:lon current-map)])
 
 (defn extract-datetime [source-datetime]
-  (let [multiparser (f/formatter (t/default-time-zone) "dd/MM/YYYY HH.mm" "YYYY-MM-dd HH:mm:ss")]
+  (let [multiparser (f/formatter (t/default-time-zone)
+                                 "dd/MM/YYYY HH:mm" "dd/MM/YYYY HH.mm" "YYYY-MM-dd HH:mm:ss")]
+    ;; the file S. Maria Cerrate/2008/Cerrate.csv has some lines with the first format. I don't know how many more files have the same format
     (f/unparse-local multiparser (f/parse-local multiparser source-datetime))))
 
 
@@ -132,7 +136,7 @@
   (try 
     (update-in current-map [:row 0] extract-datetime)
     (catch Exception e
-      (println (str "questo datetime \n" (get-in current-map [:row 0])
+      (println (str "questo datetime \n" ((:row current-map) 0) 
                     "\n non e' parsabile nel file "
                     (.getPath (:file current-map))
                     "\nalla riga "
