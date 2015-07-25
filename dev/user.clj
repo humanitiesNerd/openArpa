@@ -1,7 +1,7 @@
 (ns user
   (:require [reloaded.repl :refer [system init start stop go reset]]
             [open-arpa.systems :refer [dev-system]]
-            [open-arpa.core :as op]
+            [open-arpa.process :as op]
             [open-arpa.dictionaries :refer [pollutants]]))
 
 (reloaded.repl/set-init! dev-system)
@@ -28,4 +28,5 @@
 (def step3 (filter op/empty-cells-filtered-out step2))
 
 (def step4 (map op/back-to-flat step3))
+
 
