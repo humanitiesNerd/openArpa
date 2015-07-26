@@ -26,13 +26,6 @@
 (defn select-the-nth-row-in-a-csv-file [file index]
   (nth file (- index 1)))
 
-(defn third-rows [files]
-  (map select-the-nth-row-in-a-csv-file files (repeat 3)))
-
-(defn fifth-rows [files]
-  (map select-the-nth-row-in-a-csv-file files (repeat 5)))
-
-
 (defn file-order [file-contents pollutants]
   (let [columns (next (select-the-nth-row-in-a-csv-file file-contents 3))
         ;measure-units (select-the-nth-row-in-a-csv-file file-contents 5)
@@ -43,10 +36,6 @@
                              {:substance substance :measurement-unit (dicts/measurement-units substance) :index index})
                            )
                          indices columns))))
-
-(defn file-as-csv [file]
-  (list  (.getName file) (csv/read-csv (io/reader file))))
-
 
 (defn file-contents [as-csv]
   (drop 8 (second as-csv)))
@@ -184,10 +173,3 @@
   (> (count (:measurement current-map)) 0))
 
 
-(comment
-(defn main [path]
-  (write-file (mapcat process-file
-                      (files-collection path)
-                      (repeatedly (fn [] dicts/pollutants)) ))) 
-
-)
