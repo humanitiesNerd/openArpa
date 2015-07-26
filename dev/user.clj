@@ -23,6 +23,7 @@
 
 (def step2 (mapcat (comp
                  op/row-map
+                 op/new-order
                  op/parsed-datetime
                  ) step1))
 

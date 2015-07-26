@@ -120,7 +120,7 @@
 
 (defn back-to-flat [current-map]
   [
-   (:date current-map)
+   (:datetime current-map)
    (:substance current-map)
    (:measurement current-map)
    (:measurement-unit current-map)
@@ -136,29 +136,36 @@
 
 
 (defn parsed-datetime [current-map]
-  (try 
-    (update-in current-map [:row 0] extract-datetime)
-    (catch Exception e
-      (println (str "questo datetime \n" ((:row current-map) 0) 
-                    "\n non e' parsabile nel file "
-                    (.getPath (:file current-map))
-                    "\nalla riga "
-                    (:line-number current-map) "\n"
-                    (.getMessage e)))
-      current-map
-      )
-    ))
+  (let [datetime (get-in current-map [:row 0])]
+  
+    (try
+     
+      (update-in 
+       (assoc current-map :datetime (extract-datetime datetime))
+       [:row]
+       (comp vec next))
+     
+      (catch Exception e
+        (println (str "questo datetime \n" ((:row current-map) 0) 
+                      "\n non e' parsabile nel file "
+                      (.getPath (:file current-map))
+                      "\nalla riga "
+                      (:line-number current-map) "\n"
+                      (.getMessage e)))
+        (assoc (update-in current-map [:row] (comp vec next) ) :datetime nil)))))
 
-
+(defn new-order [current-map]
+  (defn update-order [general-order]
+    (map (fn [item]
+           (assoc item :datetime (:datetime current-map)))
+         general-order))
+  (dissoc
+   (update-in current-map [:order] update-order)
+   :datetime))
 
 (defn row-map [current-map]
   (let [row (:row current-map)
-        datetime (row 0)
         file-order (:order current-map)
-        file-row-order (map (fn [index]
-                              (conj index {:date datetime}))
-                            file-order)
-        ;cleaned-row (filter (fn [item] (> (count item) 0)) (next row))
         station (:station current-map)
         lat (:lat current-map)
         lon (:lon current-map)]
@@ -169,46 +176,13 @@
               :station station
               :lat lat
               :lon lon ))
-     file-row-order
+     file-order
      row)))
 
 
 (defn empty-cells-filtered-out [current-map]
   (> (count (:measurement current-map)) 0))
 
-(comment
-(defn file-as-maps [order file-contents station]
-  (defn recur-through-row
-    ([row] (recur-through-row (next row)  (row 0)))
-    ([row date] (let [new-order (map (fn [index] (conj index {:date date})) order)]
-                  (remove nil? (map (fn [index item]
-                                         (if (> (count item) 0)
-                                           (assoc index :measurement item :station station)))
-                                       new-order
-                                       row)))))
- 
-    (map recur-through-row
-         file-contents)) 
-)
-
-(comment
-(defn process-file [file pollutants]
-  (let [as-csv (file-as-csv file)
-        file-name (first as-csv)
-        contents (second as-csv)
-        station (new-extracted-station-name file)        
-        order (file-order contents pollutants)
-        ;purged (drop 7 contents)
-        purged (file-contents file)
-        ;; unita di misura
-        ]
-    (try 
-      (back-to-flat
-       (insert-coordinates
-        (file-as-maps order purged station)
-        (produce-stations centraline)))
-      (catch Exception e (println (.getPath file))))))
-)
 
 (comment
 (defn main [path]

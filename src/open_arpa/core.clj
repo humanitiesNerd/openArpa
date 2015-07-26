@@ -15,6 +15,7 @@
 
 (defn step2 [step1] (mapcat (comp
                  op/row-map
+                 op/new-order
                  op/parsed-datetime
                  ) step1))
 
@@ -30,3 +31,6 @@
 
 (defn main [path]
   (write-file (step4 (step3 (step2 (step1 (op/files-collection path)))))))
+
+;; at the repl:
+;; (core/main op/path-test)
