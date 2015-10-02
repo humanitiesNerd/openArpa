@@ -1,0 +1,69 @@
+Provincia,Comune,Rete,Cabina,Zona,Stazione,E,N,PM10,"PM2,5",NOx,O3,BTX,CO,SO2,HC,Meteo
+BA,Altamura,Provincia di BARI,Altamura,Suburbana,Traffico,631558,4520820,true,false,true,true,true,true,false,false,true
+BA,Bari,RRQA,Caldarola,Urbana,Traffico,658520,4553079,true,false,true,false,true,true,false,true,true
+BA,Bari,Comune di BARI,Kennedy,Suburbana,Fondo,656105,4551478,true,false,true,true,true,true,false,false,false
+BA,Bari,Comune di BARI,Japigia,Suburbana,Traffico,657821,4551943,true,false,true,false,true,true,true,true,false
+BA,Bari,Comune di BARI,Cavour,Urbana,Traffico,657197,4554020,true,false,false,false,true,true,false,false,true
+BA,Bari,Comune di BARI,Stanic,Urbana,Traffico,656212,4552323,true,false,false,false,true,true,false,false,true
+BA,Bari,Comune di BARI,Politecnico,Suburbana,Traffico,656634,4551531,true,false,true,true,true,true,true,true,true
+BA,Bari,Comune di BARI,Carbonara,Suburbana,Traffico,654377,4598816,true,false,true,false,true,true,true,true,true
+BA,Bari,Comune di BARI,CUS,Suburbana,Traffico,654878,4555354,true,false,true,true,false,false,false,false,false
+BA,Casamassima,Provincia di BARI,Casamassima,Suburbana,Fondo,661589,4535223,true,false,true,true,false,false,false,false,true
+BA,Modugno,RRQA,ENAIP,Suburbana,Industriale,648497,4552500,true,false,true,false,false,true,true,false,true
+BA,Molfetta,RRQA,Verdi,Urbana,Traffico,634595,4562323,true,false,true,false,false,false,true,false,true
+BA,Molfetta,RRQA,ASM,Suburbana,Fondo,630969,4562731,true,false,true,true,false,false,true,false,false
+BA,Monopoli,Provincia di BARI,Monopoli,Suburbana,Traffico,692701,4535752,true,true,true,false,true,true,false,false,true
+BA,Monopoli Italgreen,Provincia di BARI,Monopoli ItalGreen,Suburbana,Traffico,692229,4537004,true,true,true,false,true,false,false,false,false
+BR,Brindisi,ARPA,Casale,Urbana,Fondo,748879,4504259,true,false,true,false,false,false,true,false,false
+BR,Brindisi,ARPA,Via dei Mille,Urbana,Traffico,748464,4502808,true,false,true,false,false,false,true,false,false
+BR,Brindisi,ARPA,SISRI,Suburbana,Industriale,751700,4501449,true,false,true,false,true,true,true,false,false
+BR,Brindisi,RRQA,Via Taranto,Urbana,Traffico,749277,4503418,true,false,true,true,true,true,true,false,true
+BR,Brindisi,Provincia di BRINDISI,IT Nautico Carnaro,Urbana,Traffico,747611,4503443,false,false,false,false,false,false,false,false,false
+BR,Brindisi,ENEL/EDIPOWER,Terminal Passeggeri,Suburbana,Industriale,750422,4503838,true,true,true,true,true,true,true,false,true
+BR,Brindisi,ENIPOWER,Via Cappuccini,Urbana,Traffico,747098,4501881,true,false,true,false,false,true,true,false,false
+BR,Brindisi,ENIPOWER,Perrino,Urbana,Fondo,749892,4502036,true,false,true,false,false,true,true,false,false
+BR,Ceglie Messapica,ENEL,Ceglie Messapica,Suburbana,Fondo,712432,4502847,true,true,true,false,true,true,true,false,false
+BR,Francavilla F.na,Provincia di BRINDISI,Via Fabio Filzi,Suburbana,Traffico,719236,4489711,false,false,true,true,true,true,true,false,true
+BR,Mesagne,RRQA,Mesagne,Suburbana,Fondo,737714,4494370,true,false,true,false,false,false,true,false,true
+BR,San Pancrazio Salentino,RRQA,San Pancrazio Salentino,Suburbana,Fondo,741444,4478597,true,false,true,true,false,false,true,false,false
+BR,San Pietro Vernotico,RRQA,San Pietro Vernotico,Suburbana,Industriale,754781,4486042,true,false,true,true,false,false,true,false,false
+BR,San Pietro Vernotico,Provincia di BRINDISI,Valzani,Suburbana,Fondo,754296,4485359,false,false,true,true,false,true,true,false,true
+BR,San Vito dei Normanni,Provincia di BRINDISI,San Vito dei Normanni,Fondo,Traffico,729316,4504244,false,false,true,true,true,true,false,false,false
+BR,Torchiarolo,RRQA,Torchiarolo,Suburbana,Industriale,758842,4486404,true,false,true,true,true,true,true,false,true
+BR,Torchiarolo,ENEL,Torchiarolo- Via Fanin,Suburbana,Industriale,758263,4486545,true,true,true,false,false,false,true,false,false
+BR,Torchiarolo,ENEL,Lendinuso,Rurale,Industriale,760838,4489753,true,false,true,false,false,false,true,false,false
+BT,Andria,Provincia di Bari,Via Vaccina,Urbana,Traffico,609209,4565364,true,false,true,true,true,true,false,false,true
+BT,Barletta,Provincia di Bari,Via Casardi,Urbana,Traffico,607646,4574709,false,false,true,true,false,false,false,false,true
+FG,Foggia,RRQA,Rosati,Suburbana,Traffico,545819,4589475,true,false,true,false,false,true,true,false,true
+FG,Manfredonia,RRQA,Capitaneria di Porto,Suburbana,Traffico,575991,4608679,true,false,true,false,false,false,true,false,true
+FG,Manfredonia,RRQA,via dei Mandorli,Suburbana,Traffico,575770,4609022,true,false,true,true,false,true,true,false,true
+FG,Monte S. Angelo,RRQA,Suolo Giuffreda,Rurale,Fondo,578692,4613137,true,false,true,true,false,false,true,false,false
+LE,Arnesano,RRQA,Arnesano Riesci,Suburbana,Traffico,762876,4470790,true,false,true,false,false,false,true,false,false
+LE,Campi Salentina,Provincia di LECCE,Campi Salentina,Suburbana,Fondo,756857,4476277,true,true,true,true,true,true,false,false,true
+LE,Galatina,RRQA,Santa Barbara,Suburbana,Traffico,761767,4457503,true,false,true,true,false,false,true,false,true
+LE,Galatina,Provincia di LECCE,ITC La Porta,Suburbana,Fondo/Industriale,770356,4451121,false,true,true,true,false,true,true,false,true
+LE,Guagnano,RRQA,Guagnano,Suburbana,Fondo,751513,4478431,true,false,true,false,false,false,true,false,false
+LE,Lecce,RRQA,S. Maria Cerrate,Rurale,Fondo,764242,4483446,true,false,true,true,true,true,true,false,true
+LE,Lecce,Comune di Lecce,P.zza Libertini,Urbana,Traffico,769785,4471666,true,false,true,true,true,true,false,false,false
+LE,Lecce,Comune di Lecce,Via Garigliano,Urbana,Traffico,769536,4473048,true,true,true,false,true,true,true,false,true
+LE,Lecce,Provincia di LECCE,Piazza Palio,Urbana,Traffico,771253,4472743,true,false,true,true,true,true,false,false,true
+LE,Maglie,Provincia di LECCE,ITC De Castro,Suburbana,Traffico,780702,4446683,false,true,true,true,false,true,true,false,true
+LE,Surbo,RRQA,Giorgiloro,Suburbana,Traffico,766796,4475426,true,false,true,false,false,true,true,false,true
+LE,Surbo,ENEL,Via B. Croce,Rurale,Industriale,764807,4478158,true,false,true,false,false,false,true,false,true
+TA,Grottaglie,Provincia di TARANTO,Grottaglie,Suburbana,Fondo,705279,4490271,true,false,true,true,false,false,true,false,true
+TA,Martina Franca,Provincia di TARANTO,Martina Franca,Urbana,Traffico,697012,4508162,false,false,true,true,true,true,false,false,true
+TA,Massafra,Provincia di TARANTO,Via Frappietri,Urbana,Traffico/industriale,679111,4495815,false,false,false,false,false,false,false,false,false
+TA,Statte,RRQA,Statte,Suburbana,Industriale,686530,4492525,true,false,true,true,false,false,true,false,false
+TA,Statte,ARPA,SS7 Ponte Wind,Rurale,Traffico/industriale,684114,4488423,true,false,true,false,true,false,true,false,false
+TA,Talsano,ARPA,Talsano,Suburbana,Industriale,693783,4475985,true,false,true,true,false,false,true,false,false
+TA,Taranto,RRQA,Via Archimede,Suburbana,Industriale,689238,4485033,true,false,true,false,false,true,true,false,false
+TA,Taranto,RRQA,San Vito,Suburbana,Traffico/industriale,688778,4477122,true,false,true,false,false,false,true,false,true
+TA,Taranto,RRQA,Via Alto Adige,Urbana,Traffico,691924,4481337,true,true,true,false,true,false,true,false,true
+TA,Taranto,RRQA,Via Machiavelli,Suburbana,Industriale,688642,4484370,true,true,true,false,true,true,true,false,true
+TA,Taranto,ARPA,Paolo VI - CISI,Rurale,Industriale,687616,4487932,true,false,true,false,false,false,true,false,false
+TA,Taranto,ILVA,Tamburi,,Industriale,688621,4485115,,,,,,,,,
+TA,Taranto,ILVA,Parchi,,Industriale,688313,4485262,,,,,,,,,
+TA,Taranto,ILVA,cokeria,,Industriale,687851,4485902,,,,,,,,,
+TA,Taranto,ILVA,Direzione,,Industriale,686462,4485813,,,,,,,,,
+TA,Taranto,ILVA,Riv1,,Industriale,687819,4487762,,,,,,,,,
+TA,Taranto,ILVA,Portineria,,Industriale,685300,4487615,,,,,,,,,
