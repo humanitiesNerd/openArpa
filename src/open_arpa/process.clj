@@ -120,8 +120,8 @@
 (defn extract-datetime [source-datetime]
   (let [multiparser (f/formatter (t/default-time-zone)
                                  "dd/MM/YYYY HH:mm" "dd/MM/YYYY HH.mm" "dd/MM/YYYY HH.mm.ss" "YYYY-MM-dd HH:mm:ss")]
-    ;; the file S. Maria Cerrate/2008/Cerrate.csv has some lines with the first format. I don't know how many more files have the same format
-    (f/unparse-local multiparser (f/parse-local multiparser source-datetime))))
+    (f/unparse-local multiparser
+                     (f/parse-local multiparser source-datetime))))
 
 
 (defn parsed-datetime [current-map]
