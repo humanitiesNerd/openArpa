@@ -66,15 +66,6 @@
   (let [contents (csv/read-csv (io/reader file))]
     (reduce conj (map (fn [row] {(row 3) [(row 6) (row 7)]})  contents))))
 
-(defn coordinates [current-map]
-  (let [stations (produce-stations centraline)]          
-       (if-let [coords (stations (current-map :station))]
-         (assoc current-map
-                :lat (coords 0)
-                :lon (coords 1))
-         (assoc current-map
-                :lat ""
-                :lon ""))))
 
 (defn new-extracted-station-name [file]
   (let [path (paths/up-dir (paths/up-dir (paths/parse-path file)))
@@ -95,8 +86,9 @@
      :line-number number
      :row row
      :station (:station current-map)
-     :lat (:lat current-map)
-     :lon (:lon current-map)})
+     
+     
+     })
   (let [rows (:file-body current-map)
         numbers (range 1 (+ (count rows) 1 ))]
     (map per-row rows numbers)))
@@ -114,8 +106,9 @@
    (:measurement current-map)
    (:measurement-unit current-map)
    (:station current-map)
-   (:lat current-map)
-   (:lon current-map)])
+   
+   
+   ])
 
 (defn extract-datetime [source-datetime]
   (let [multiparser (f/formatter (t/default-time-zone)
@@ -156,15 +149,17 @@
   (let [row (:row current-map)
         file-order (:order current-map)
         station (:station current-map)
-        lat (:lat current-map)
-        lon (:lon current-map)]
+       
+        
+        ]
     (map
      (fn [index item]
        (assoc index
               :measurement item
               :station station
-              :lat lat
-              :lon lon ))
+              
+              
+              ))
      file-order
      row)))
 
