@@ -6,7 +6,7 @@
 
 (defn step1 [coll] (mapcat (comp
                     op/line-numbers
-                    op/coordinates
+                   
                     op/station
                     op/added-file-order
                     op/splitted-file
