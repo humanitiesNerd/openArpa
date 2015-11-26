@@ -28,6 +28,9 @@
     (csv/write-csv out-file
                    contents)))
 
+(defn writelines [file-path lines]
+  (with-open [out-file (io/writer file-path)]
+    (doseq [line lines] (.write out-file line))))
 
 (defn main [path]
   (write-file (step4 (step3 (step2 (step1 (op/files-collection path)))))))
