@@ -8,6 +8,6 @@
                  [org.danielsz/system "0.1.4"]
                  [environ "1.0.0"]
                  [pathetic "0.5.1"]
-                 [clj-time "0.10.0"]]
+                 [clj-time "0.11.0"]]
   :profiles {:dev {:source-paths ["dev"]}} 
                  )
