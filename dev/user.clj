@@ -34,14 +34,8 @@
 (def step4 (mapcat op/as-ttl))
 
 (defn thread [path]
-  (into [] (comp step1 step2 step3 step4)  (op/files-collection path)))
+  (sequence (comp step1 step2 step3 step4)  (op/files-collection path)))
 
 
-;(def thread (first (sequence (comp step1 step2 step3) coll) ))
-
-
-(comment
-(def step4 "a")
-)
 ;; at the repl:
 ;; (core/main op/path-test)

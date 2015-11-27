@@ -1,8 +1,8 @@
 (ns open-arpa.core
   (:require [open-arpa.process :as op]
             [clojure.java.io :as io]
-            [clojure.data.csv :as csv])
-  (:import (java.io Writer )))
+            )
+  )
   
 
 
@@ -35,10 +35,8 @@
 
 
 (defn writelines [destination-path lines]
-  (with-open [out-file (io/writer destination-path :append true)]
+  (with-open [out-file (io/writer destination-path)]
     (doseq [line lines] (.write out-file line))))
-
-
 
 (defn main []
   (writelines "resources/processed-files/semantic-arpa.ttl"

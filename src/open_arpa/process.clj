@@ -267,9 +267,14 @@
    (str "\t")
    (observedProperties substance)
    (str "\n")
+   (str "\t" "ssn:hasValue " "\"" measurement  "\"" " ;\n")
    (str "\t" "time:inDateTime " "\"" (unparsed-datetime daytime-formatter datetime) "\"" "^^xsd:time ;" "\n")
    (str "\t" "basic:uom " "\"" measurement-unit "\"")
    (str " .\n")
+
+   
+   (str  "\n" "openarpa-sens:" station  " ;\n"
+	"\t" "ssn:hasOutput " "openarpa-obs:" station substance (unparsed-datetime id-formatter datetime) " .\n")
    
    )
-  )
+ )
