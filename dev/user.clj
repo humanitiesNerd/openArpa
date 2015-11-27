@@ -13,6 +13,8 @@
 
 (def coll (op/files-collection op/Altamura-test))
 
+(def big-coll op/path)
+
 (def step1 (mapcat (comp
                     op/line-numbers
                     
@@ -29,9 +31,10 @@
 
 (def step3 (filter op/empty-cells-filtered-out))
 
-(def step4 (map op/as-ttl))
+(def step4 (mapcat op/as-ttl))
 
-(def thread (into [] (comp step1 step2 step3 step4)  coll))
+(defn thread [path]
+  (into [] (comp step1 step2 step3 step4)  (op/files-collection path)))
 
 
 ;(def thread (first (sequence (comp step1 step2 step3) coll) ))

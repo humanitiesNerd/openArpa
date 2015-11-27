@@ -20,7 +20,7 @@
 (def Altamura-test (io/file "resources/new_layout-test-data/Altamura/2010/BARI Altamura 2010.csv"))
 (def path "resources/new_layout")
 (def path-test "resources/new_layout-test-data")
-(def det-path "resources/processed-files")
+(def dest-path "resources/processed-files")
 
 
 (defn select-the-nth-row-in-a-csv-file [file index]
