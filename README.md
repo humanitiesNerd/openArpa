@@ -31,3 +31,5 @@ There's no documentation at all. I'll try to write it in the future.
 I couldn't understand the places where some of the measurements were taken. So not oll of the input files end up in the output. Measurements of the air pollution without geographical coordinates don't make much sense.
 
 Even so, this thing produced a file of approximately 15 million records.
+
+If all goes well, there will be soon an on line SPARQL endpoint providing these data. When ready I'll update this README.
