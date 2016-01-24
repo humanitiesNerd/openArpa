@@ -2,6 +2,8 @@
 
 The background is [here](https://medium.com/@catonano/a-daunting-job-ab19d8cc972a#.ibeq308cb)
 
+The main difference is I dumped Grafter since then.
+
 This is a very elementary exercise in clojure code.
 
 Nothing interesting here. Just a plain old collection of maps being passed around.
@@ -10,7 +12,9 @@ It doesn't even make use of pattern matching, and it could really use it.
 
 No parallelism, no fancy stuff.
 
-I was poking around to see if and how these data could be made ready to be dumped into a triple store.
+I even misunderstood how the transducers were supposed to be used so I had to ask for clarifications on the beginners channel of the clojurians Slack
+
+I have been just poking around to see if and how these data could be made ready to be dumped into a triple store.
 
 # Known woes
 
