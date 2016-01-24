@@ -164,3 +164,14 @@ apply, that proxy's public statement of acceptance of any version is
 permanent authorization for you to choose that version for the
 Library.
 
+  7. If you modify this Program, or any covered work, by linking or 
+combining it with data.csv, system, environ, pathetic, clj-time 
+(or a modified version of those libraries), 
+containing parts covered by the terms of Eclipse Public License, 
+the licensors of this Program grant you additional permission to convey 
+the resulting work. 
+Corresponding Source for a non-source form of such a combination shall 
+include the source code for the parts of data.csv, system, environ, 
+pathetic, clj-time used as well as that of the covered work.
+
+
