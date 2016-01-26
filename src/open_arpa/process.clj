@@ -4,7 +4,7 @@
 
 ;A copy of such license (in its version 3.0) with the aforementioned exception can be found at the root of this distribution in the COPYING file
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 (ns open-arpa.process
   (:require
@@ -93,9 +93,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
      :order (:order current-map)
      :line-number number
      :row row
-     :station (:station current-map)
-     
-     
+     :station (:station current-map)     
      })
   (let [rows (:file-body current-map)
         numbers (range 1 (+ (count rows) 1 ))]
