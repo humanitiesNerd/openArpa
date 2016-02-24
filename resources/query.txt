@@ -1,0 +1,20 @@
+            #
+            # Seleziona i primi 100 sensori che osservano ossidi di azoto
+            #
+            prefix dbpedia: <http://dbpedia.org/resource/>
+            prefix ssn: <http://purl.oclc.org/NET/ssnx/ssn#>
+            prefix basic: <http://def.seegrid.csiro.au/isotc211/iso19103/2005/basic#>
+            prefix dbpedia-it: <http://it.dbpedia.org/resource/>
+            prefix op-arpa-sensor: <http://lod.openpuglia.org/sensor/>
+            prefix op-arpa-observation: <http://lod.openpuglia.org/observation/>
+            prefix time: <http://www.w3.org/2006/time#>
+
+            SELECT ?observation 
+            WHERE {
+              ?observation time:year "2007" ^^<http://www.w3.org/2001/XMLSchema#gYear>  .
+              ?observation ssn:isProducedBy op-arpa-sensor:Via_Alto_Adige .
+              #?observation ssn:observedProperty "NOx" .
+              
+
+            }
+            LIMIT 100
