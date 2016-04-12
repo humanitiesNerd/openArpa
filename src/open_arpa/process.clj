@@ -41,7 +41,9 @@
     (sort-by :index (map (fn [index column]
                            (let [substance (pollutants column)
                                  ]
-                             {:substance substance :measurement-unit (dicts/measurement-units substance) :index index})
+                             {:substance substance
+                              :measurement-unit (dicts/measurement-units substance)
+                              :index index})
                            )
                          indices columns))))
 
@@ -55,7 +57,9 @@
   (take 8 rows))
 
 (defn ingested-file [file]
-         {:file-name (.getName file) :file file :rows  (csv/read-csv (io/reader file))})
+  {:file-name (.getName file)
+   :file file
+   :rows  (csv/read-csv (io/reader file))})
 
 (defn splitted-file [map]
   (let [rows (map :rows)
@@ -67,7 +71,9 @@
 
 
 (defn added-file-order [current-map]
-  (dissoc (assoc current-map :order (file-order (:file-headers current-map) pollutants)) :file-headers))
+  (dissoc
+   (assoc current-map :order (file-order (:file-headers current-map) pollutants))
+   :file-headers))
 
 
 (defn produce-stations [file]
@@ -158,13 +164,12 @@
         file-order (:order current-map)
         station (:station current-map)        
         ]
-    (map
+    (map 
      (fn [index item]
        (assoc index
               :measurement item
               :station station
-              
-              
+                            
               ))
      file-order
      row)))
