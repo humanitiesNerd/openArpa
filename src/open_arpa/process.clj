@@ -88,6 +88,12 @@
     (path index)
   ))
 
+(defn extracted-year [file]
+  (let [path (paths/up-dir (paths/parse-path file))
+        length (count path)
+        index (- length 1)]
+    (path index)))
+
 (defn station [current-map]
   (assoc current-map :station (new-extracted-station-name (:file current-map))))
 
@@ -105,11 +111,10 @@
         numbers (range 1 (+ (count rows) 1 ))]
     (map per-row rows numbers)))
 
- (defn files-collection [path]
-    (filter
-     (fn [thing]
-       (.isFile thing))
-     (file-seq (io/file path))))
+(defn files-collection [path filter-function]
+  (filter
+   filter-function
+   (file-seq (io/file path))))
 
 (defn back-to-flat [current-map]
   [
@@ -118,7 +123,6 @@
    (:measurement current-map)
    (:measurement-unit current-map)
    (:station current-map)
-   
    
    ])
 

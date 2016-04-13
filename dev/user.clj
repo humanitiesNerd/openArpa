@@ -19,9 +19,9 @@
 
 ;; op/Altamura-test
 
-(def coll (op/files-collection op/Altamura-test))
 
-(def big-coll op/path)
+(def path op/path-test)
+
 
 (def step1 (mapcat (comp
                     op/line-numbers
@@ -41,9 +41,7 @@
 
 (def step4 (mapcat op/as-ttl))
 
-(defn thread [path]
-  (sequence (comp step1 step2 step3 step4)  (op/files-collection path)))
-
-
-;; at the repl:
-;; (core/main op/path-test)
+(defn thread []
+  (op/files-collection path (fn [thing]
+                              (and (.isFile thing)
+                                   (= "2014" (op/extracted-year thing))))))
