@@ -36,18 +36,38 @@
 (def step4 (mapcat op/as-ttl))
 
 
-(defn thread [path]
-  (sequence
-        (comp step1 step2 step3 step4)
-        (op/files-collection path)))
+(defn thread
+  ([path]
+   (sequence
+    (comp step1 step2 step3 step4)
+    (op/files-collection path (fn [thing]
+                                (.isFile thing)))))
+
+  ([path year]
+   (sequence
+    (comp step1 step2 step3 step4)
+    (op/files-collection path
+                         (fn [thing]
+                           (and (.isFile thing)
+                                (= year (op/extracted-year thing))))))
+   )
+  )
 
 
 (defn writelines [destination-path lines]
   (with-open [out-file (io/writer destination-path)]
     (doseq [line lines] (.write out-file line))))
 
-(defn main []
-  (writelines "resources/processed-files/semantic-arpa.ttl"
-              (thread op/path)))
+(defn main
+  ([path]
+   (writelines "resources/processed-files/semantic-arpa.ttl"
+               (thread path)))
+  ([path year]
+   (writelines "resources/processed-files/semantic-arpa.ttl"
+              (thread path year)))
+  )
+
+
 ;; at the repl:
 ;; (core/main op/path-test)
+
